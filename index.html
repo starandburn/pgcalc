@@ -11,11 +11,48 @@
   select { width: 6em; padding: 0.3em; margin-left: 0.5em; font-size: 1em; }
   .set { background: #fff; padding: 1em; border-radius: 8px; margin-bottom: 1em; box-shadow: 0 2px 5px rgba(0,0,0,0.1);}
   .total { font-weight: bold; margin-top: 1em; font-size: 1.8em; text-align: center; }
+  table.answers { width: 100%; margin: 1em auto; border-collapse: collapse; font-size: 0.95em; background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden; }
+  table.answers th, table.answers td { border: 1px solid #ccc; padding: 6px 8px; text-align: center; }
+  table.answers th { background: #eee; }
 </style>
 </head>
 <body>
 
 <h1>PG適性検査計算</h1>
+
+<table class="answers">
+  <tr>
+    <th rowspan="2">第1部 前半</th>
+    <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th>
+  </tr>
+  <tr>
+    <td>5</td><td>5</td><td>4</td><td>1</td><td>4</td><td>3</td><td>3</td>
+  </tr>
+
+  <tr>
+    <th rowspan="2">第1部 後半</th>
+    <th>8</th><th>9</th><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th><th>15</th><th>16</th><th>17</th><th>18</th><th>19</th><th>20</th>
+  </tr>
+  <tr>
+    <td>1</td><td>5</td><td>3</td><td>2</td><td>4</td><td>4</td><td>2</td><td>4</td><td>4</td><td>2</td><td>2</td><td>5</td><td>1</td>
+  </tr>
+
+  <tr>
+    <th rowspan="2">第2部 前半</th>
+    <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th>
+  </tr>
+  <tr>
+    <td>3</td><td>4</td><td>5</td><td>2</td><td>2</td>
+  </tr>
+
+  <tr>
+    <th rowspan="2">第2部 後半</th>
+    <th>6</th><th>7</th><th>8</th><th>9</th><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th><th>15</th>
+  </tr>
+  <tr>
+    <td>1</td><td>3</td><td>5</td><td>3</td><td>1</td><td>4</td><td>3</td><td>4</td><td>1</td><td>1</td>
+  </tr>
+</table>
 
 <div class="set">
   <h2>第1部</h2>
@@ -42,7 +79,6 @@
 <div class="total">全体合計: <span id="sum">0</span></div>
 
 <script>
-// 0〜maxまでの<option>を生成
 function fillSelect(sel, max=30){
   sel.innerHTML = '';
   for (let i=0; i<=max; i++){
@@ -71,9 +107,8 @@ function calc(){
   document.getElementById('sum').textContent = total.toFixed(2);
 }
 
-calc(); // 初期計算
+calc();
 </script>
 
 </body>
 </html>
-
