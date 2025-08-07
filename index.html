@@ -6,10 +6,11 @@
 <title>PG適性検査計算</title>
 <style>
   body { font-family: sans-serif; padding: 1em; background: #f4f4f4; }
+  h1 { text-align: center; }
   label { display: block; margin-top: 0.5em; }
-  input { width: 6em; padding: 0.3em; margin-left: 0.5em; }
+  select { width: 6em; padding: 0.3em; margin-left: 0.5em; font-size: 1em; }
   .set { background: #fff; padding: 1em; border-radius: 8px; margin-bottom: 1em; box-shadow: 0 2px 5px rgba(0,0,0,0.1);}
-  .total { font-weight: bold; margin-top: 1em; }
+  .total { font-weight: bold; margin-top: 1em; font-size: 1.8em; text-align: center; }
 </style>
 </head>
 <body>
@@ -18,39 +19,57 @@
 
 <div class="set">
   <h2>第1部</h2>
-  <label>正答: <input type="number" id="c1" value="0"></label>
-  <label>誤答: <input type="number" id="w1" value="0"></label>
+  <label>正答:
+    <select id="c1" data-max="30"></select>
+  </label>
+  <label>誤答:
+    <select id="w1" data-max="30"></select>
+  </label>
   <div>第1部 合計: <span id="s1">0</span></div>
 </div>
 
 <div class="set">
   <h2>第2部</h2>
-  <label>正答: <input type="number" id="c2" value="0"></label>
-  <label>誤答: <input type="number" id="w2" value="0"></label>
+  <label>正答:
+    <select id="c2" data-max="30"></select>
+  </label>
+  <label>誤答:
+    <select id="w2" data-max="30"></select>
+  </label>
   <div>第2部 合計: <span id="s2">0</span></div>
 </div>
 
 <div class="total">全体合計: <span id="sum">0</span></div>
 
 <script>
+// 0〜maxまでの<option>を生成
+function fillSelect(sel, max=30){
+  sel.innerHTML = '';
+  for (let i=0; i<=max; i++){
+    const opt = document.createElement('option');
+    opt.value = String(i);
+    opt.textContent = String(i);
+    sel.appendChild(opt);
+  }
+}
+
+['c1','w1','c2','w2'].forEach(id=>{
+  const el = document.getElementById(id);
+  const max = Number(el.dataset.max ?? 30);
+  fillSelect(el, max);
+  el.addEventListener('change', calc);
+});
+
+function num(id){ return Number(document.getElementById(id).value || 0); }
+
 function calc(){
-  const c1 = Number(document.getElementById('c1').value);
-  const w1 = Number(document.getElementById('w1').value);
-  const c2 = Number(document.getElementById('c2').value);
-  const w2 = Number(document.getElementById('w2').value);
-
-  const s1 = c1 * 1 + w1 * -0.25;
-  const s2 = c2 * 1 + w2 * -0.25;
+  const s1 = num('c1') * 1 + num('w1') * -0.25;
+  const s2 = num('c2') * 1 + num('w2') * -0.25;
   const total = s1 + s2;
-
   document.getElementById('s1').textContent = s1.toFixed(2);
   document.getElementById('s2').textContent = s2.toFixed(2);
   document.getElementById('sum').textContent = total.toFixed(2);
 }
-
-document.querySelectorAll('input').forEach(inp => {
-  inp.addEventListener('input', calc);
-});
 
 calc(); // 初期計算
 </script>
