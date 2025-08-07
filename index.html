@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PG適性検査計算</title>
+<style>
+  body { font-family: sans-serif; padding: 1em; background: #f4f4f4; }
+  label { display: block; margin-top: 0.5em; }
+  input { width: 6em; padding: 0.3em; margin-left: 0.5em; }
+  .set { background: #fff; padding: 1em; border-radius: 8px; margin-bottom: 1em; box-shadow: 0 2px 5px rgba(0,0,0,0.1);}
+  .total { font-weight: bold; margin-top: 1em; }
+</style>
+</head>
+<body>
+
+<h1>PG適性検査計算</h1>
+
+<div class="set">
+  <h2>第1部</h2>
+  <label>正答: <input type="number" id="c1" value="0"></label>
+  <label>誤答: <input type="number" id="w1" value="0"></label>
+  <div>第1部 合計: <span id="s1">0</span></div>
+</div>
+
+<div class="set">
+  <h2>第2部</h2>
+  <label>正答: <input type="number" id="c2" value="0"></label>
+  <label>誤答: <input type="number" id="w2" value="0"></label>
+  <div>第2部 合計: <span id="s2">0</span></div>
+</div>
+
+<div class="total">全体合計: <span id="sum">0</span></div>
+
+<script>
+function calc(){
+  const c1 = Number(document.getElementById('c1').value);
+  const w1 = Number(document.getElementById('w1').value);
+  const c2 = Number(document.getElementById('c2').value);
+  const w2 = Number(document.getElementById('w2').value);
+
+  const s1 = c1 * 1 + w1 * -0.25;
+  const s2 = c2 * 1 + w2 * -0.25;
+  const total = s1 + s2;
+
+  document.getElementById('s1').textContent = s1.toFixed(2);
+  document.getElementById('s2').textContent = s2.toFixed(2);
+  document.getElementById('sum').textContent = total.toFixed(2);
+}
+
+document.querySelectorAll('input').forEach(inp => {
+  inp.addEventListener('input', calc);
+});
+
+calc(); // 初期計算
+</script>
+
+</body>
+</html>
