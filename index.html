@@ -6,7 +6,10 @@
 <title>PG適性検査計算</title>
 <style>
   body { font-family: sans-serif; font-size: 0.9em; padding: 1em; background: #f4f4f4; }
-  h1 { text-align: center; font-size: 1.2em; margin-bottom: 0.5em; }
+  h1 { text-align: center; font-size: 1.2em; margin: 0.5em 0; }
+  .timer-container { text-align: center; margin-bottom: 1em; }
+  .timer-btn { padding: 0.5em 1em; margin: 0.3em; font-size: 1em; border: none; border-radius: 8px; background: #2563eb; color: white; }
+  .timer-display { font-size: 1.5em; margin-top: 0.3em; }
   label { display: block; margin-top: 0.5em; }
   select { width: 6em; padding: 0.3em; margin-left: 0.5em; font-size: 1em; }
   .set { background: #fff; padding: 1em; border-radius: 8px; margin-bottom: 1em; box-shadow: 0 2px 5px rgba(0,0,0,0.1);}
@@ -20,7 +23,16 @@
 </head>
 <body>
 
+<div class="timer-container">
+  <button class="timer-btn" onclick="startTimer(5)">5分タイマー</button>
+  <button class="timer-btn" onclick="startTimer(7)">7分タイマー</button>
+  <div class="timer-display" id="timer">00:00</div>
+</div>
+
 <h1>PG適性検査計算</h1>
+
+<!--（以下省略せず完全なHTML構成にするため、次に続く）-->
+
 
 <table class="answers">
   <tr>
@@ -81,6 +93,28 @@
 <button class="reset-btn" onclick="resetInputs()">リセット</button>
 
 <script>
+let timerInterval;
+
+function startTimer(mins) {
+  clearInterval(timerInterval);
+  let remaining = mins * 60;
+  updateDisplay(remaining);
+  timerInterval = setInterval(() => {
+    remaining--;
+    updateDisplay(remaining);
+    if (remaining <= 0) {
+      clearInterval(timerInterval);
+      alert(mins + '分タイマーが終了しました！');
+    }
+  }, 1000);
+}
+
+function updateDisplay(seconds) {
+  const m = String(Math.floor(seconds / 60)).padStart(2, '0');
+  const s = String(seconds % 60).padStart(2, '0');
+  document.getElementById('timer').textContent = `${m}:${s}`;
+}
+
 function fillSelect(sel, max=30){
   sel.innerHTML = '';
   for (let i=0; i<=max; i++){
