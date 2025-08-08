@@ -5,16 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>PG適性検査計算</title>
 <style>
-  body { font-family: sans-serif; padding: 1em; background: #f4f4f4; }
-  h1 { text-align: center; }
+  body { font-family: sans-serif; font-size: 0.9em; padding: 1em; background: #f4f4f4; }
+  h1 { text-align: center; font-size: 1.2em; margin-bottom: 0.5em; }
   label { display: block; margin-top: 0.5em; }
   select { width: 6em; padding: 0.3em; margin-left: 0.5em; font-size: 1em; }
   .set { background: #fff; padding: 1em; border-radius: 8px; margin-bottom: 1em; box-shadow: 0 2px 5px rgba(0,0,0,0.1);}
   .total { font-weight: bold; margin-top: 1em; font-size: 1.8em; text-align: center; }
+  .reset-btn { display: block; width: 100%; max-width: 300px; margin: 1em auto; padding: 0.6em; font-size: 1em; background: #ccc; border: none; border-radius: 8px; }
   table.answers { width: 100%; margin: 1em auto; border-collapse: collapse; font-size: 0.95em; background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden; table-layout: fixed; }
-  table.answers th, table.answers td { border: 1px solid #ccc; padding: 6px 8px; text-align: center; word-break: break-word; }
+  table.answers th, table.answers td { border: 1px solid #ccc; padding: 6px 4px; text-align: center; word-break: break-word; }
   table.answers th { background: #eee; }
-  table.answers td.header { background: #eee; font-weight: bold; font-size:0.3em; }
+  table.answers td.header { background: #eee; font-weight: bold; font-size: 0.3em; }
 </style>
 </head>
 <body>
@@ -77,6 +78,8 @@
 
 <div class="total">全体合計: <span id="sum">0</span></div>
 
+<button class="reset-btn" onclick="resetInputs()">リセット</button>
+
 <script>
 function fillSelect(sel, max=30){
   sel.innerHTML = '';
@@ -88,7 +91,7 @@ function fillSelect(sel, max=30){
   }
 }
 
-['c1','w1','c2','w2'].forEach(id=>{
+['c1','w1','c2','w2'].forEach(id => {
   const el = document.getElementById(id);
   const max = Number(el.dataset.max ?? 30);
   fillSelect(el, max);
@@ -104,6 +107,11 @@ function calc(){
   document.getElementById('s1').textContent = s1.toFixed(2);
   document.getElementById('s2').textContent = s2.toFixed(2);
   document.getElementById('sum').textContent = total.toFixed(2);
+}
+
+function resetInputs(){
+  ['c1','w1','c2','w2'].forEach(id => document.getElementById(id).value = "0");
+  calc();
 }
 
 calc();
